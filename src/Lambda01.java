@@ -10,7 +10,7 @@ public class Lambda01 {
 	 	1) Lambda "Functional Programming"
 	 		"Functional Programming" de "Nasil yaparim?" degil "Ne yaparim?" dusunulur.
 	 	2) "Structured Programming" de "Ne yaparim?" dan cok "Nasil Yaparim?" dusunulur
-	 	3) "Functional Programming" hiz, code kisaligi, code okunabilirligi
+	 	3) "Functional Programming" hiz, code kisaligi(sadeligi), code okunabilirligi
 	 	ve hatasiz code yazma acilarindan cok faydalidir.
 	 	4) Lambda sadece collections'larda(List, Queue ve Set) ve array'lerde kullanilabilir ancak MAP'LERDE KULLANILMAZ.
         Lambda kullanmak hatasız code kullanmaktır.
@@ -274,6 +274,9 @@ public class Lambda01 {
     public static void maxElFunctional(List<Integer> list) {
 
         Optional<Integer> maxEl = list.stream().reduce(Math::max);
+        // Java Optipnal Class olusturarak  exception firlatmanin onune geciyor.
+        // Misal biz burda donen sonucu int e atasak donen sayi double olabilir ya da donen sayi cok uzun bir sayi olabilir.
+        // Optional Class in try catch gibi foksiyonu vardir.
 
         System.out.println(maxEl);
 
