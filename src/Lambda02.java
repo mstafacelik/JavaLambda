@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Lambda02 {
     public static void main(String[] args) {
@@ -35,6 +32,18 @@ public class Lambda02 {
         System.out.println();
         System.out.println("   ***   ");
 
+        System.out.println();
+        System.out.println("   ***   ");
+        onbestenBuyukEnKucukTekSayi(b);
+
+        System.out.println();
+        System.out.println("   ***   ");
+        printCiftKareBuyuktenKucuge(b);
+
+        System.out.println();
+        System.out.println("   ***   ");
+        tekKareBuyuktenKucuge(b);
+
 
     }
 
@@ -45,7 +54,10 @@ public class Lambda02 {
     public static void printCiftKareMax(List<Integer> list) {
 
 
-        Optional max = list.stream().filter(Lambda01::ciftBul).map(t -> t * t).reduce(Integer::max);
+        Optional max = list.
+                stream().
+                filter(Lambda01::ciftBul).
+                map(t -> t * t).reduce(Integer::max);
 
         // Optional max = list.stream().filter(Lambda01::ciftBul).map(t -> t * t).reduce(Math::max);
         // reduce(Math::max) da kullanilabilir ancak  reduce(Integer::max) daha spesifik oldugu icin daha hizli calisir
@@ -67,7 +79,9 @@ public class Lambda02 {
     public static void printListToplam1(List<Integer> list) {
 
 
-        int toplam = list.stream().reduce(0, (x, y) -> x + y);
+        int toplam = list.
+                stream().
+                reduce(0, (x, y) -> x + y);
 
         System.out.println(toplam);
 
@@ -83,8 +97,13 @@ public class Lambda02 {
 
     public static void printListToplam2(List<Integer> list) {
 
-        Optional<Integer> toplam1 = list.stream().reduce(Integer::sum);
-        Optional<Integer> toplam2 = list.stream().reduce(Math::addExact);
+        Optional<Integer> toplam1 = list.
+                stream().
+                reduce(Integer::sum);
+
+        Optional<Integer> toplam2 = list.
+                stream().
+                reduce(Math::addExact);
 
         System.out.println(toplam1);
         System.out.println();
@@ -99,7 +118,10 @@ public class Lambda02 {
 
     public static void printCiftCarpim1(List<Integer> list) {
 
-        Optional<Integer> carpimSonuc = list.stream().filter(Lambda01::ciftBul).reduce(Math::multiplyExact);
+        Optional<Integer> carpimSonuc = list.
+                stream().
+                filter(Lambda01::ciftBul).
+                reduce(Math::multiplyExact);
 
         System.out.println(carpimSonuc);
 
@@ -112,10 +134,16 @@ public class Lambda02 {
 
     public static void printCiftCarpim2(List<Integer> list) {
 
-        Integer carp = list.stream().filter(Lambda01::ciftBul).reduce(1, (x, y) -> x * y);
+        Integer carp = list.
+                stream().
+                filter(Lambda01::ciftBul).
+                reduce(1, (x, y) -> x * y);
 
         // pozitif deger uretin
-        Integer carpPoz = list.stream().filter(Lambda01::ciftBul).reduce(-1, (x, y) -> x * y);
+        Integer carpPoz = list.
+                stream().
+                filter(Lambda01::ciftBul).
+                reduce(-1, (x, y) -> x * y);
 
         System.out.println(carp);
         System.out.println(carpPoz);
@@ -126,13 +154,19 @@ public class Lambda02 {
     //List'teki elemanlardan en kucugunu 4 farklı yontem ile yazdiriniz
     //1. yontem Method Reference --> Integer class
     public static void min1(List<Integer> list) {
-        Optional<Integer> min = list.stream().reduce(Integer::min);
+        Optional<Integer> min = list.
+                stream().
+                reduce(Integer::min);
+
         System.out.println(min);
     }
 
     //2. yontem Method Reference --> Math class
     public static void min2(List<Integer> list) {
-        Optional<Integer> min = list.stream().reduce(Math::min);
+        Optional<Integer> min = list.
+                stream().
+                reduce(Math::min);
+
         System.out.println(min);
     }
 
@@ -144,15 +178,67 @@ public class Lambda02 {
     }
 
     public static void min3(List<Integer> list) {
-        Optional<Integer> min = list.stream().reduce(Lambda02::minBul);
+        Optional<Integer> min = list.
+                stream().
+                reduce(Lambda02::minBul);
+
         System.out.println(min);
     }
 
     //4. yontem Lambda Expression
 
     public static void min4(List<Integer> list) {
-        Integer min = list.stream().reduce(Integer.MAX_VALUE, (x, y) -> x < y ? x : y);
+        Integer min = list.
+                stream().
+                reduce(Integer.MAX_VALUE, (x, y) -> x < y ? x : y);
+
         System.out.println(min);
+    }
+
+    //Soru 4
+    //List'teki 15'ten buyuk en kucuk tek sayiyi yazdiriniz
+
+    public static void onbestenBuyukEnKucukTekSayi(List<Integer> list) {
+
+        Optional<Integer> minSayi = list.
+                stream().  // akisa girildi
+                        filter(t -> t % 2 == 1 & t > 15).  // sart saglandi
+                        reduce(Integer::min); // min deger reduce edildi
+
+        System.out.println(list.stream().filter(t -> t % 2 == 1 & t > 15).reduce(Integer::min));
+
+
+    }
+
+    //Soru 5
+    //list'in cift  elemanlarinin kareleri ni  kucuge buyukten yazdiriniz
+
+    public static void printCiftKareBuyuktenKucuge(List<Integer> list) {
+
+        list.
+                stream().
+                filter(Lambda01::ciftBul).
+                map(t -> t * t).
+                sorted(). // akisa giren elemanlar naturel order a gore siralanir
+                forEach(Lambda01::printEl);
+
+
+    }
+
+    // Soru 6
+    //list'in tek  elemanlarinin kareleri ni buykten kucuge  yazdiriniz
+
+
+    public static void tekKareBuyuktenKucuge(List<Integer> list) {
+
+
+        list.
+                stream().
+                filter(t -> t % 2 != 0).map(t -> t * t).
+                sorted(Comparator.reverseOrder()).  // akisa giren elemanlar ters siralanir-->> COK ONEMLI
+                forEach(Lambda01::printEl);
+
+
     }
 
 
