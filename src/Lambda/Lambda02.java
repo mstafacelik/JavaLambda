@@ -1,3 +1,5 @@
+package Lambda;
+
 import java.util.*;
 
 public class Lambda02 {
@@ -59,11 +61,11 @@ public class Lambda02 {
                 filter(Lambda01::ciftBul).
                 map(t -> t * t).reduce(Integer::max);
 
-        // Optional max = list.stream().filter(Lambda01::ciftBul).map(t -> t * t).reduce(Math::max);
+        // Optional max = list.stream().filter(Lambda.Lambda01::ciftBul).map(t -> t * t).reduce(Math::max);
         // reduce(Math::max) da kullanilabilir ancak  reduce(Integer::max) daha spesifik oldugu icin daha hizli calisir
 
 
-        // int max = list.stream().filter(Lambda01::ciftBul).map(t -> t * t).reduce(Integer::max);
+        // int max = list.stream().filter(Lambda.Lambda01::ciftBul).map(t -> t * t).reduce(Integer::max);
         // reduce () return edilen eleman null ya da int ten buyuk olma ihtimali icin Java guvenlik olarak handle ederek
         // Optional Class i sart kosuyor
 

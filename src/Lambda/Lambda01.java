@@ -1,3 +1,5 @@
+package Lambda;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -257,7 +259,7 @@ public class Lambda01 {
 
     public static void printCiftKarekok(List<Integer> list) {
 
-        // list.stream().filter(Lambda01::ciftBul).map(Math::sqrt).forEach(t -> System.out.println(t + " "));
+        // list.stream().filter(Lambda.Lambda01::ciftBul).map(Math::sqrt).forEach(t -> System.out.println(t + " "));
         list.
                 stream().
                 filter(Lambda01::ciftBul).

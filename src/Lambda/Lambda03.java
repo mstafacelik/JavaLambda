@@ -1,7 +1,12 @@
+package Lambda;
+
+import Lambda.Lambda01;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Lambda03 {
     public static void main(String[] args) {
@@ -44,10 +49,26 @@ public class Lambda03 {
         System.out.println("   ***   ");
 
         wIleBaslayanKontrol(c);
+        System.out.println();
+        System.out.println("   ***   ");
+
         karakterSayisiYediKontrol(c);
         System.out.println();
+        System.out.println("   ***   ");
 
         xbitmeKotrol(c);
+        System.out.println();
+        System.out.println("   ***   ");
+
+        printEnKarakterSayisiBuyukEleman(c);
+
+        System.out.println();
+        System.out.println("   ***   ");
+        printEnKarakterSayisiBuyukEleman2(c);
+
+        System.out.println();
+        System.out.println("   ***   ");
+        printSonHarfeGoreSiraliIlkElemanHaric(c);
 
 
     }
@@ -64,7 +85,7 @@ public class Lambda03 {
                 sorted().                   // alfabetik sira, natural order
                 distinct().                 // *** distinct () ile tekrarsiz yapildi.->>> COK ONEMLI
                 forEach(t -> System.out.print(t + " ")); // yazdirildi
-        // forEach(Lambda01::printEl); ->> BURADA PRINTEL METHODUNU KULLANAMAYIZ
+        // forEach(Lambda.Lambda01::printEl); ->> BURADA PRINTEL METHODUNU KULLANAMAYIZ
         // CUNKU PRINT EL METHODUNDAKI PARAMETRE Integer TÜRÜNDE. Burada ise String!
 
         // CINCIX EMINE EMRE ISLAM KADER KOKOREC MEHMET NILGUN
@@ -85,7 +106,7 @@ public class Lambda03 {
                 sorted(Comparator.reverseOrder()).         // tersten
                 distinct().                                // tekrarsiz
                 forEach(t -> System.out.print(t + " "));   // yazdirdik
-        // forEach(Lambda01::printEl);
+        // forEach(Lambda.Lambda01::printEl);
 
 
     }
@@ -210,7 +231,46 @@ public class Lambda03 {
     }
 
     // Soru 9
-    //Karakter sayisi en buyuk elemani yazdiriniz.
+    // Karakter sayisi en buyuk elemani yazdiriniz.
+
+    public static void printEnKarakterSayisiBuyukEleman(List<String> list) {
+
+        System.out.println(list.
+                stream().
+                sorted(Comparator.comparing(t -> t.toString().length()). // lengt karakter uzunluguna gore siraladik -->kucukten buyuge
+                        reversed()).                                     // ters siraladi --> buyukten kucuge
+                        findFirst());
+
+
+    }
+
+    public static void printEnKarakterSayisiBuyukEleman2(List<String> list) {
+
+        Stream<String> sonIsim = list.
+                stream().
+                sorted(Comparator.comparing(t -> t.toString().length()). // length karakter uzunluguna gore siraladik -->kucukten buyuge
+                        reversed()).                                     // ters siraladi --> buyukten kucuge
+                //   findFirst());
+                        limit(1);                                        // limit(a) akistan cikan elemanlari a parametresine gore sinirlandirir, ilk a elemani alir
+        System.out.println(Arrays.toString(sonIsim.toArray()));
+
+
+    }
+
+    // Soru 10
+    // list elemanlarini son harfine göre siralayıp ilk eleman hariç kalan elemanlari yazdiriniz
+
+    public static void printSonHarfeGoreSiraliIlkElemanHaric(List<String> list) {
+
+        list.
+                stream().
+                sorted(Comparator.comparing(t -> t.charAt(t.length() - 1))).
+                skip(1). // skip(): bu atlama methodu
+                //forEach(t->System.out.println(t+ " "));
+                        forEach(System.out::println);
+
+
+    }
 
 
 }
