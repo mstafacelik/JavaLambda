@@ -53,6 +53,18 @@ public class Lambda04 {
         System.out.println();
         System.out.println("   ***   ");
 
+        System.out.println(gunduzBatchSayisi(d));
+        System.out.println();
+        System.out.println("   ***   ");
+
+        System.out.println(ogrenciSayisi130danBuyukBatchlerdenEnBuyukOlaninOrtalamasi(d));
+        System.out.println();
+        System.out.println("   ***   ");
+
+        System.out.println(ogrenciSayisi150denAzEnKucukBatchOrtalamasi(d));
+        System.out.println();
+        System.out.println("   ***   ");
+
 
     }
 
@@ -145,7 +157,7 @@ public class Lambda04 {
                 stream().
                 filter(t -> t.getBatchOrt() > 95).           // 95 den byk sarti saglandi
                         map(t -> t.getOgrcSayisi()).         // batch ortalamasi olan data, ogrenci sayisi olarak update edildi
-                        //reduce(0,Integer::sum);            // ogrc sayisi toplandi
+                //reduce(0,Integer::sum);            // ogrc sayisi toplandi
                         reduce(0, (t, u) -> t + u);   // ogrc sayisi toplandi
 
 
@@ -157,7 +169,7 @@ public class Lambda04 {
                 stream().
                 filter(t -> t.getBatchOrt() > 95).        // 95 den byk sarti saglandi
                         mapToInt(t -> t.getOgrcSayisi()). // mapToInt()-->type gore int return ederki sum() calisir
-                                                          // reduce gerek kalmaz daha kisa ve hizli code imkani saglar
+                // reduce gerek kalmaz daha kisa ve hizli code imkani saglar
                         sum();
 
     }
@@ -168,12 +180,51 @@ public class Lambda04 {
 
         return list.
                 stream().
-                filter(t->t.getOgrcSayisi()>130).
-                mapToDouble(t->t.getBatchOrt()).
+                filter(t -> t.getOgrcSayisi() > 130).
+                mapToDouble(t -> t.getBatchOrt()).
                 average();
 
 
     }
 
+    // Soru 09-->gunduz batch'lerinin sayisini  yazdiriniz.
+
+    public static int gunduzBatchSayisi(List<Mustingo> list) {
+
+        return (int) list.
+                stream().
+                filter(t -> t.getBatchName().
+                        contains("gunduz")).
+                count();
+
+
+    }
+    // Soru 10-->Ogrenci sayilari 130'dan fazla olan batch'lerin en buyuk batch ortalamasini bulunuz
+
+    public static OptionalInt ogrenciSayisi130danBuyukBatchlerdenEnBuyukOlaninOrtalamasi(List<Mustingo> list) {
+
+        return list.
+                stream().
+                filter(t -> t.getOgrcSayisi() > 130).
+                mapToInt(Mustingo::getBatchOrt).
+                max();
+
+
+    }
+
+    // Soru 11-->Ogrenci sayilari 150'dan az olan batch'lerin en kucuk batch ortalamasini bulunuz.
+
+
+    public static int ogrenciSayisi150denAzEnKucukBatchOrtalamasi(List<Mustingo> list) {
+
+        return list.
+                stream()
+                .filter(t -> t.getOgrcSayisi() < 150).
+                mapToInt(Mustingo::getBatchOrt).
+                min().
+                getAsInt();//getAsInt()-->cıktıyı int type olarak return eder
+
+
+    }
 
 }
